@@ -1,51 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gerador de QR Code</title>
-  <link rel="icon" href="favicon.png" type="image/x-icon"/>
+  <link rel="icon" href="favicon.png" type="image/x-icon" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-   
-    <div id="container">
-         <img type="img" src="favicon.png" alt="logo">
-         <br>
-        <label for="text-input">Digite o endereço do site que gostaria de gerar QR code:</label>
-        
-        <input type="text" id="text-input">
-        <br>
 
-        <button onclick="gerarQRCode()">Gerar QR Code</button>
-        <br>
+  <div class="wrapper">
 
-        <p>Desenvolvido por João Galindo</p>
+    <!-- Logo -->
+    <div class="logo">
+      <img src="favicon.png" alt="Logo FL" />
     </div>
- 
-  <div id="qrcode"></div>
+
+    <!-- Formulário -->
+    <div class="form-group">
+      <label for="text-input">
+        Digite o endereço do site que gostaria de gerar QR code:
+      </label>
+      <input
+        type="url"
+        id="text-input"
+        placeholder="Cole o link aqui"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button type="button" onclick="gerarQRCode()">Gerar QR Code</button>
+    </div>
+
+    <!-- Exibição do QR Code -->
+    <div id="qrcode"></div>
+
+    <!-- Rodapé -->
+    <footer>
+      <p class="footer-text">Desenvolvido por João Galindo</p>
+    </footer>
+
+  </div>
 
   <script>
     function gerarQRCode() {
-      var inputValor = document.getElementById("text-input").value;
+      const inputValor = document.getElementById("text-input").value.trim();
 
-    
       if (!inputValor) {
         alert("Digite um link para gerar o QR Code.");
         return;
       }
 
-   
-      var qr = qrcode(0, "L");
+      const qr = qrcode(0, "L");
       qr.addData(inputValor);
       qr.make();
 
-      var qrImage = qr.createImgTag(7, 7);
-
-      // Exibir o QR Code no elemento HTML
-      document.getElementById("qrcode").innerHTML = qrImage;
+      document.getElementById("qrcode").innerHTML = qr.createImgTag(7, 7);
     }
   </script>
+
 </body>
 </html>
