@@ -1,4 +1,4 @@
-# QR Code Studio
+# Gerador-QRCODE
 
 Gerador de QR Code completo, com múltiplos tipos de conteúdo, personalização visual e exportação — evolução do projeto original "Gerador-QRCODE".
 
