@@ -1,0 +1,90 @@
+{
+  "appName": "QR Code Studio",
+  "version": "2.0.0",
+  "errorCorrectionLevels": [
+    { "value": "L", "label": "Baixa (7%)" },
+    { "value": "M", "label": "Média (15%)" },
+    { "value": "Q", "label": "Alta (25%)" },
+    { "value": "H", "label": "Máxima (30%)" }
+  ],
+  "colorPresets": [
+    { "name": "Clássico",  "fg": "#0B0B12", "bg": "#FFFFFF" },
+    { "name": "Esmeralda", "fg": "#0B3B2E", "bg": "#EAFBF3" },
+    { "name": "Âmbar",     "fg": "#2E1B04", "bg": "#FFF4DC" },
+    { "name": "Violeta",   "fg": "#1F1147", "bg": "#F1ECFF" },
+    { "name": "Rosa",      "fg": "#3A0B22", "bg": "#FFEAF3" },
+    { "name": "Noturno",   "fg": "#EDEFF7", "bg": "#12141C" }
+  ],
+  "qrTypes": [
+    {
+      "id": "url",
+      "label": "Link",
+      "icon": "link",
+      "fields": [
+        { "id": "url", "label": "Endereço do site", "type": "url", "placeholder": "https://exemplo.com.br", "required": true }
+      ],
+      "build": "url"
+    },
+    {
+      "id": "text",
+      "label": "Texto",
+      "icon": "text",
+      "fields": [
+        { "id": "text", "label": "Texto livre", "type": "textarea", "placeholder": "Digite qualquer texto, recado ou código", "required": true }
+      ],
+      "build": "text"
+    },
+    {
+      "id": "wifi",
+      "label": "Wi-Fi",
+      "icon": "wifi",
+      "fields": [
+        { "id": "ssid", "label": "Nome da rede (SSID)", "type": "text", "placeholder": "MinhaRedeWiFi", "required": true },
+        { "id": "password", "label": "Senha", "type": "text", "placeholder": "Deixe em branco se for aberta", "required": false },
+        { "id": "encryption", "label": "Segurança", "type": "select", "options": ["WPA", "WEP", "nopass"], "required": true }
+      ],
+      "build": "wifi"
+    },
+    {
+      "id": "contact",
+      "label": "Contato",
+      "icon": "contact",
+      "fields": [
+        { "id": "name", "label": "Nome completo", "type": "text", "placeholder": "Maria Silva", "required": true },
+        { "id": "phone", "label": "Telefone", "type": "tel", "placeholder": "+55 11 91234-5678", "required": false },
+        { "id": "email", "label": "E-mail", "type": "email", "placeholder": "maria@email.com", "required": false }
+      ],
+      "build": "vcard"
+    },
+    {
+      "id": "email",
+      "label": "E-mail",
+      "icon": "email",
+      "fields": [
+        { "id": "to", "label": "Destinatário", "type": "email", "placeholder": "contato@email.com", "required": true },
+        { "id": "subject", "label": "Assunto", "type": "text", "placeholder": "Opcional", "required": false },
+        { "id": "body", "label": "Mensagem", "type": "textarea", "placeholder": "Opcional", "required": false }
+      ],
+      "build": "email"
+    },
+    {
+      "id": "phone",
+      "label": "Telefone",
+      "icon": "phone",
+      "fields": [
+        { "id": "phone", "label": "Número com DDI e DDD", "type": "tel", "placeholder": "+55 11 91234-5678", "required": true }
+      ],
+      "build": "phone"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "icon": "whatsapp",
+      "fields": [
+        { "id": "phone", "label": "Número com DDI e DDD", "type": "tel", "placeholder": "+55 11 91234-5678", "required": true },
+        { "id": "message", "label": "Mensagem inicial", "type": "textarea", "placeholder": "Opcional", "required": false }
+      ],
+      "build": "whatsapp"
+    }
+  ]
+}
