@@ -3,63 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gerador de QR Code</title>
-  <link rel="icon" href="favicon.png" type="image/x-icon" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-  <link rel="stylesheet" href="style.css" />
+  <title>QR Code Studio — Gerador completo de QR Code</title>
+  <meta name="description" content="Gere QR Codes de links, texto, Wi-Fi, contatos, e-mail, telefone e WhatsApp. Personalize cores, tamanho e baixe em PNG ou SVG." />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body data-theme="dark">
 
-  <div class="wrapper">
+  <div class="scan-line" aria-hidden="true"></div>
 
-    <!-- Logo -->
-    <div class="logo">
-      <img src="favicon.png" alt="Logo FL" />
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </span>
+      <div class="brand-text">
+        <h1>QR Code Studio</h1>
+        <p>Crie, personalize e baixe seus QR Codes</p>
+      </div>
     </div>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+      <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke-linecap="round"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+    </button>
+  </header>
 
-    <!-- Formulário -->
-    <div class="form-group">
-      <label for="text-input">
-        Digite o endereço do site que gostaria de gerar QR code:
-      </label>
-      <input
-        type="url"
-        id="text-input"
-        placeholder="Cole o link aqui"
-        autocomplete="off"
-        spellcheck="false"
-      />
-      <button type="button" onclick="gerarQRCode()">Gerar QR Code</button>
-    </div>
+  <main class="app-shell">
 
-    <!-- Exibição do QR Code -->
-    <div id="qrcode"></div>
+    <!-- Coluna de configuração -->
+    <section class="panel panel-config" aria-label="Configuração do QR Code">
 
-    <!-- Rodapé -->
-    <footer>
-      <p class="footer-text">Desenvolvido por João Galindo</p>
-    </footer>
+      <nav class="type-tabs" id="type-tabs" role="tablist" aria-label="Tipo de conteúdo"></nav>
 
-  </div>
+      <form id="qr-form" class="qr-form" novalidate>
+        <div id="fields-container" class="fields-container"></div>
 
-  <script>
-    function gerarQRCode() {
-      const inputValor = document.getElementById("text-input").value.trim();
+        <div class="field-row two-col">
+          <div class="field">
+            <label for="ec-level">Correção de erro</label>
+            <select id="ec-level" name="ec-level"></select>
+          </div>
+          <div class="field">
+            <label for="qr-size">Tamanho <span id="qr-size-value">280px</span></label>
+            <input type="range" id="qr-size" min="160" max="480" step="20" value="280" />
+          </div>
+        </div>
 
-      if (!inputValor) {
-        alert("Digite um link para gerar o QR Code.");
-        return;
-      }
+        <div class="field-row">
+          <span class="field-label">Cores</span>
+          <div class="color-presets" id="color-presets"></div>
+          <div class="color-pickers">
+            <label class="color-pick">
+              <input type="color" id="fg-color" value="#0B0B12" />
+              <span>Frente</span>
+            </label>
+            <label class="color-pick">
+              <input type="color" id="bg-color" value="#FFFFFF" />
+              <span>Fundo</span>
+            </label>
+          </div>
+        </div>
 
-      const qr = qrcode(0, "L");
-      qr.addData(inputValor);
-      qr.make();
+        <div class="field-row">
+          <label class="checkbox-row">
+            <input type="checkbox" id="add-logo-toggle" />
+            <span>Adicionar logo/imagem no centro</span>
+          </label>
+          <input type="file" id="logo-input" accept="image/*" hidden />
+          <button type="button" id="logo-pick-btn" class="btn btn-ghost btn-small" hidden>Escolher imagem</button>
+          <span id="logo-filename" class="logo-filename"></span>
+        </div>
 
-      document.getElementById("qrcode").innerHTML = qr.createImgTag(7, 7);
-    }
-  </script>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" id="generate-btn">
+            <span>Gerar QR Code</span>
+          </button>
+          <button type="button" class="btn btn-ghost" id="clear-btn">Limpar</button>
+        </div>
+      </form>
+    </section>
 
+    <!-- Coluna de resultado -->
+    <section class="panel panel-preview" aria-label="Pré-visualização do QR Code">
+      <div class="qr-stage">
+        <div class="qr-frame" id="qr-frame">
+          <div class="qr-placeholder" id="qr-placeholder">
+            <span class="brand-mark placeholder-mark" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </span>
+            <p>Preencha os campos ao lado<br/>para ver seu QR Code aqui</p>
+          </div>
+          <div id="qrcode" class="qrcode-canvas-wrap"></div>
+        </div>
+      </div>
+
+      <div class="result-actions" id="result-actions" hidden>
+        <button type="button" class="btn btn-secondary" id="download-png-btn">Baixar PNG</button>
+        <button type="button" class="btn btn-secondary" id="download-svg-btn">Baixar SVG</button>
+        <button type="button" class="btn btn-secondary" id="copy-img-btn">Copiar imagem</button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Desenvolvido por João Galindo · QR Code Studio</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
