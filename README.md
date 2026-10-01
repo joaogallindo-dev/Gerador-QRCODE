@@ -2,22 +2,6 @@
 
 Gerador de QR Code completo, com múltiplos tipos de conteúdo, personalização visual e exportação — evolução do projeto original "Gerador-QRCODE".
 
-## Estrutura do projeto
-
-```
-qrcode-studio/
-├── index.html          # marcação e estrutura da página
-├── css/
-│   └── style.css        # tema, layout, animações
-├── js/
-│   └── app.js            # toda a lógica da aplicação
-├── data/
-│   └── config.json       # tipos de QR Code, campos do formulário, presets de cor
-├── assets/
-│   └── favicon.png
-└── README.md
-```
-
 ## Funcionalidades
 
 - **7 tipos de QR Code**: Link, Texto, Wi-Fi, Contato (vCard), E-mail, Telefone e WhatsApp — cada um com seu próprio formulário, gerado dinamicamente a partir de `data/config.json`.
@@ -28,18 +12,6 @@ qrcode-studio/
 - **Tema claro/escuro** com persistência da preferência do usuário.
 - **Animações**: linha de varredura no topo, transições ao trocar de tipo, entrada suave do QR Code gerado, feedback com toasts em vez de `alert()`.
 - **Acessível e responsivo**: foco visível, `aria-selected` nas abas, layout centralizado que se adapta de celular a desktop, respeita `prefers-reduced-motion`.
-
-## Como usar
-
-Basta abrir `index.html` no navegador. Não é necessário build nem instalação.
-
-> Se `data/config.json` não puder ser carregado (por exemplo, ao abrir o arquivo diretamente via `file://` em alguns navegadores, que bloqueiam `fetch` local), o app usa automaticamente uma cópia de segurança dos mesmos dados incluída em `js/app.js`, então tudo continua funcionando normalmente. Para ter certeza de que o `config.json` externo é usado (útil se você quiser editar os tipos de QR Code sem mexer no JS), sirva a pasta com um servidor local simples, por exemplo:
->
-> ```bash
-> npx serve .
-> # ou
-> python3 -m http.server
-> ```
 
 ## Personalizando
 
